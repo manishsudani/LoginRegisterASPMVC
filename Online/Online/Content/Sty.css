@@ -1,0 +1,37 @@
+﻿/*
+   Author:  Manish Sudani
+   Assignment:  Project Workshop2
+*/
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #00bc8c;
+    color: white;
+    text-align: center;
+}
+.jumbotron {
+    background-image: url('../images/architecture.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0;
+}
+
+.container {
+    padding: 0 16px;
+    min-height: 20%;
+    max-height: 20%;
+}
+
+.carousel-control-prev {
+    margin-left: 0px;
+}
+
+.index-photos {
+    position: relative;
+    width: 100%;
+    height: auto;
+}

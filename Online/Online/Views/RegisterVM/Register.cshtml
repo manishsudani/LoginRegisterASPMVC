@@ -1,0 +1,174 @@
+﻿@model Online.Models.ViewModels.RegistrationVM
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<h2>Register</h2>
+
+<h4 class="text-danger">@ViewBag.repeatedusermsg</h4>    
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" id="form_layout">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustFirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustFirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustLastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustLastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustLastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustCity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustCity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustCity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="country-block">
+        @Html.LabelFor(model => model.CustCountry, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustCountry, new[] {new SelectListItem(){Text="Canada", Value="Canada"},
+                                                                     new SelectListItem(){Text ="United States", Value="United States"} },
+                                                     "Choose your country", new { @class = "form-control", @id = "ddlCountry" })
+            @Html.ValidationMessageFor(model => model.CustCountry, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="can">
+        @Html.LabelFor(model => model.CustProv, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustProv, (List<SelectListItem>)ViewBag.Province, "Choose your province", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CustProv, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" id="usa" style="display:none">
+        <label for="ddlState" class="control-label col-md-2">State</label>
+        @*@Html.LabelFor()*@
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustProv, (List<SelectListItem>)ViewBag.State, "Choose your state", new { @class = "form-control", @id = "ddlState" })
+            @Html.ValidationMessageFor(model => model.CustProv, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#ddlCountry').on('change', function () {
+                if (this.value == "United States")                
+                {
+                    $("#usa").show();
+                    noti = $("#can").remove();                    
+                }
+                else {
+                    $("#usa").hide();
+                    $('body').append(noti);
+                    $("#can").insertAfter($("#country-block"));                                      
+                }
+            });
+        });
+    </script>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustPostal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustPostal, new { htmlAttributes = new { @class = "form-control", @style = "text-transform:uppercase", oninput = "upperCaseF(this)" } })
+            @Html.ValidationMessageFor(model => model.CustPostal, "", new { @class = "text-danger" })
+            <script>function upperCaseF(a) { a.value = a.value.toUpperCase() };</script>
+        </div>
+    </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.CustCountry, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustCountry, new[] {new SelectListItem(){Text="Canada", Value="Canada"},
+                                                                     new SelectListItem(){Text ="United States", Value="United States"} },
+                                                     "Choose your country", new { @class = "form-control", @id = "ddlCountry" })
+            @Html.ValidationMessageFor(model => model.CustCountry, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustHomePhone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustHomePhone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustHomePhone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustBusPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustBusPhone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustBusPhone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustEmail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Go back", "Index", "Home")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
